@@ -1,0 +1,40 @@
+﻿<Window x:Class="LiveAppsOverlay.Views.ThumbnailWindowEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:LiveAppsOverlay.Views"
+        mc:Ignorable="d"
+        AllowsTransparency="False" Background="Transparent" Topmost="True" WindowStyle="None"
+        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Top="{Binding Path=Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Left="{Binding Path=Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Opacity="{Binding Opacity}"
+        Title="{Binding Title}"
+        Loaded="Window_Loaded"
+        LocationChanged="Window_LocationChanged"
+        MouseLeave="Window_MouseLeave"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp"
+        MouseMove="Window_MouseMove"
+        SizeChanged="Window_SizeChanged"
+        ShowInTaskbar="False">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Drag Mode" Command="{Binding MenuDragModeCommand}" />
+            <MenuItem Header="Region Mode" Command="{Binding MenuRegionModeCommand}" />
+            <Separator />
+            <MenuItem Header="Reset" Command="{Binding MenuResetCommand}" />
+            <Separator />
+            <MenuItem Header="Cancel" Command="{Binding MenuCancelCommand}" />
+        </ContextMenu>
+    </Window.ContextMenu>
+    <Grid>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                Command="{Binding OpenConfigCommand}">
+            <iconPacks:PackIconMaterial Width="15" Height="15" Kind="Cog" />
+        </Button>
+    </Grid>
+</Window>

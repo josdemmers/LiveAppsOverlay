@@ -1,0 +1,22 @@
+﻿<Window x:Class="LiveAppsOverlay.Views.ThumbnailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:LiveAppsOverlay.Views"
+        mc:Ignorable="d"
+        AllowsTransparency="True" Background="Transparent" Topmost="True" WindowStyle="None"
+        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Top="{Binding Path=Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Left="{Binding Path=Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Opacity="{Binding Opacity}"
+        Title="{Binding Title}"
+        Loaded="Window_Loaded"
+        SizeChanged="Window_SizeChanged"
+        ShowInTaskbar="False" >
+    <Grid>
+        
+    </Grid>
+</Window>

@@ -1,0 +1,11 @@
+WINDOW_EX_STYLE
+WINDOW_LONG_PTR_INDEX
+GetWindowLong
+SetWindowLong
+
+DWM_TNP_*
+DwmGetWindowAttribute
+DwmRegisterThumbnail
+DwmQueryThumbnailSourceSize 
+DwmUnregisterThumbnail
+DwmUpdateThumbnailProperties

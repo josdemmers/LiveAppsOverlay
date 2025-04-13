@@ -1,0 +1,76 @@
+﻿<Window x:Class="LiveAppsOverlay.Views.ConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:loc="clr-namespace:LiveAppsOverlay.Localization;assembly=LiveAppsOverlay.Localization" 
+        xmlns:local="clr-namespace:LiveAppsOverlay.Views"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Height="450"
+        ShowInTaskbar="False"
+        Title="{Binding Title}"
+        Topmost="True"
+        Width="250"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        Closed="Window_Closed">
+    
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Closing">
+            <b:InvokeCommandAction Command="{Binding WindowClosingCommand}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <mah:ToggleSwitch 
+                    Margin="0 0 0 0"
+                    IsOn="{Binding IsEditModeEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="{loc:LocExtension rsCapEditMode}"
+                    OnContent="{loc:LocExtension rsCapEditMode}"
+                    ToolTip="{loc:LocExtension rsTooltipToggleEditMode}"/>
+                <Label Margin="0 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="{loc:LocExtension rsTooltipToggleEditMode}">
+                    <iconPacks:PackIconMaterial Kind="InformationOutline" Width="16" Height="16"/>
+                </Label>
+            </Grid>
+
+            <Grid>
+                <mah:ToggleSwitch 
+                    Margin="0 0 0 0"
+                    IsEnabled="{Binding IsDragModeButtonEnabled}"
+                    IsOn="{Binding IsDragModeEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="{loc:LocExtension rsCapDragMode}"
+                    OnContent="{loc:LocExtension rsCapDragMode}"
+                    ToolTip="{loc:LocExtension rsTooltipToggleDragMode}"/>
+                <Label Margin="0 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="{loc:LocExtension rsTooltipToggleDragMode}">
+                    <iconPacks:PackIconMaterial Kind="InformationOutline" Width="16" Height="16"/>
+                </Label>
+            </Grid>
+
+            <Grid>
+                <mah:ToggleSwitch 
+                    Margin="0 0 0 0"
+                    IsEnabled="{Binding IsRegionModeButtonEnabled}"
+                    IsOn="{Binding IsRegionModeEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="{loc:LocExtension rsCapRegionMode}"
+                    OnContent="{loc:LocExtension rsCapRegionMode}"
+                    ToolTip="{loc:LocExtension rsTooltipToggleRegionMode}"/>
+                <Label Margin="0 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="{loc:LocExtension rsTooltipToggleRegionMode}">
+                    <iconPacks:PackIconMaterial Kind="InformationOutline" Width="16" Height="16"/>
+                </Label>
+            </Grid>
+
+            <mah:MetroHeader Margin="0 0 0 5" Header="Opacity" Foreground="White" IsEnabled="{Binding IsOpacityEditEnabled}">
+                <mah:NumericUpDown 
+                    Minimum="0"      
+                    Maximum="255"
+                    Interval="1"
+                    Value="{Binding Opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </mah:MetroHeader>
+        </StackPanel>
+    </Grid>
+</Window>

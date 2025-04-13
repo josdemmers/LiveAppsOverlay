@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LiveAppsOverlay.Entities\LiveAppsOverlay.Entities.csproj" />
+    <ProjectReference Include="..\LiveAppsOverlay.Interfaces\LiveAppsOverlay.Interfaces.csproj" />
+    <ProjectReference Include="..\LiveAppsOverlay.Messages\LiveAppsOverlay.Messages.csproj" />
+  </ItemGroup>
+
+</Project>

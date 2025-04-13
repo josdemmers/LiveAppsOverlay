@@ -1,0 +1,233 @@
+﻿<UserControl x:Class="LiveAppsOverlay.Views.AppsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:LiveAppsOverlay.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:loc="clr-namespace:LiveAppsOverlay.Localization;assembly=LiveAppsOverlay.Localization"
+             xmlns:local="clr-namespace:LiveAppsOverlay.Views"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:vmentities="clr-namespace:LiveAppsOverlay.ViewModels.Entities"
+             mah:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Width="{Binding ActualWidth, RelativeSource = {RelativeSource AncestorType = {x:Type UserControl}}}" 
+      Height="{Binding ActualHeight, RelativeSource ={RelativeSource AncestorType = {x:Type UserControl}}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 0 0 5">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox Width="150"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding Path=ProcessEntries}"
+                          SelectedItem="{Binding Path=SelectedProcessEntry}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" VerticalAlignment="Center" Height="20"/>
+                                <TextBlock Margin="5 0 0 0" Text="{Binding Name}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Command="{Binding AddProcessEntryCommand}" ToolTip="{loc:LocExtension rsTooltipAddProcess}">
+                    <iconPacks:PackIconMaterial Kind="Plus" />
+                </Button>
+                <Button Command="{Binding RefreshProcessEntryListCommand}" ToolTip="{loc:LocExtension rsTooltipRefreshProcessList}">
+                    <iconPacks:PackIconMaterial Kind="Refresh" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      Width="250"
+                      Margin="10 10 5 10"
+                      Padding="0 0 5 0"
+                      HorizontalContentAlignment="Stretch"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <StackPanel Margin="0 0 0 10" Orientation="Vertical">
+                <Border BorderThickness="1" BorderBrush="#333333">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Margin="0" Padding="0">
+                            <iconPacks:PackIconMaterial Width="22"
+                                                        Height="40"
+                                                        Kind="StarOutline" />
+                        </Label>
+                        <Label Grid.Column="1" Content="{loc:LocExtension rsCapFavorites}" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                <Border BorderThickness="1" BorderBrush="#333333">
+                    <ItemsControl ItemsSource="{Binding FavoriteProcessEntries}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <Grid>
+                                    <Border CornerRadius="3" Margin="3" Background="#333333">
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="1"/>
+                                        </Border.Effect>
+                                    </Border>
+                                    <Border CornerRadius="3" Margin="3" Background="#333333">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Margin="2 2 2 2" TextTrimming="CharacterEllipsis" FontSize="15"
+                                                       Text="{Binding DisplayName}"
+                                                       ToolTip="{Binding DisplayName}">
+                                                <TextBlock.InputBindings>
+                                                    <MouseBinding Command="{Binding Path=DataContext.SelectFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
+                                                </TextBlock.InputBindings>
+                                            </TextBlock>
+
+                                            <Button Grid.Column="1" Width="20" BorderThickness="0" Padding="0 5 0 5"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                                    Command="{Binding Path=DataContext.RemoveFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}">
+                                                <iconPacks:PackIconMaterial Width="10" Height="10" Kind="CloseThick" />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <DockPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Visibility="{Binding Path=IsFavoriteProcessEntrySelected, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}">
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{loc:LocExtension rsCapDisplayName}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedFavoriteProcessEntryViewModel.DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="1" Grid.Column="0" Content="{loc:LocExtension rsCapProcess}"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Width="150" IsEnabled="False" Text="{Binding SelectedFavoriteProcessEntryViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox IsEnabled="False" Text="{Binding Path=SelectedFavoriteProcessEntryViewModel.Handle, Converter={x:Static converters:HwndToStringConverter.Instance}, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Padding="5 0 5 0" Command="{Binding RefreshSelectedFavoriteProcessEntryHandleCommand}" ToolTip="{loc:LocExtension rsTooltipRefreshHandle}">
+                        <iconPacks:PackIconMaterial Kind="Refresh" />
+                    </Button>
+                    <Button Padding="5 0 5 0" Foreground="{Binding Path=SelectedFavoriteProcessEntryViewModel.IsAnyThumbnailActive, Converter={x:Static converters:BooleanToRedGreenBrushConverter.Instance}}" ToolTip="{loc:LocExtension rsTooltipToggleOnOff}"
+                            Command="{Binding ThumbnailConfigsToggleAllCommand}">
+                        <iconPacks:PackIconMaterial Kind="Power" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding SelectedFavoriteProcessEntryViewModel.ThumbnailConfigsSorted}"
+                          Visibility="{Binding Path=SelectedFavoriteProcessEntryViewModel.IsRunning, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}">
+                    <ItemsControl.Resources>
+                        <!-- Add -->
+                        <DataTemplate DataType="{x:Type vmentities:ThumbnailConfigAddViewModel}">
+                            <Grid>
+                                <Border Width="250" Height="75" CornerRadius="5" Margin="5" Background="#333333">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1"/>
+                                    </Border.Effect>
+                                </Border>
+                                <Border CornerRadius="5" Margin="5" Background="#333333" Width="250" Height="75">
+                                    <Grid>
+                                        <Button Grid.Row="0" Grid.Column="0" BorderThickness="0"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                            Command="{Binding Path=DataContext.ThumbnailConfigAddCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}">
+                                            <iconPacks:PackIconMaterial Width="50" Height="50" Kind="Plus" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+
+                        <!-- ThumbnailConfig -->
+                        <DataTemplate DataType="{x:Type vmentities:ThumbnailConfigViewModel}">
+                            <Grid>
+                                <Border Width="250" Height="75" CornerRadius="5" Margin="5" Background="#333333">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1"/>
+                                    </Border.Effect>
+                                </Border>
+                                <Border Width="250" Height="75" CornerRadius="5" Margin="5" Background="#333333">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <CheckBox Margin="10 0 0 0" IsChecked="{Binding Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Padding="5" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{loc:LocExtension rsTooltipConfig}"
+                                                Command="{Binding Path=DataContext.ThumbnailConfigRemoveCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}">
+                                                <iconPacks:PackIconMaterial Width="15" Height="15" Kind="CloseThick" />
+                                            </Button>
+                                            <Button Padding="5" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{loc:LocExtension rsTooltipConfig}"
+                                                Command="{Binding Path=DataContext.ThumbnailConfigSetCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}">
+                                                <iconPacks:PackIconMaterial Width="15" Height="15" Kind="Cog" />
+                                            </Button>
+                                            <Button Padding="5" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{loc:LocExtension rsTooltipConfig}"
+                                                Command="{Binding Path=DataContext.ThumbnailConfigToggleCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}"
+                                                Foreground="{Binding Path=IsActive, Converter={x:Static converters:BooleanToRedGreenBrushConverter.Instance}}">
+                                                <iconPacks:PackIconMaterial Width="15" Height="15" Kind="Power" />
+                                            </Button>
+                                        </StackPanel>
+                                        <TextBlock Grid.Row="1" Margin="10 0 10 5" TextWrapping="Wrap" Foreground="LightGray" FontSize="15"
+                                               Text="{Binding Name}" ToolTip="{Binding Name}" >
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding Command="{Binding Path=DataContext.ThumbnailConfigSetCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}" MouseAction="LeftDoubleClick" />
+                                            </TextBlock.InputBindings>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+
+    </Grid>
+</UserControl>

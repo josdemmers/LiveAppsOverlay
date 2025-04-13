@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="LiveAppsOverlay.Views.Dialogs.HotkeyConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:loc="clr-namespace:LiveAppsOverlay.Localization;assembly=LiveAppsOverlay.Localization"
+             xmlns:local="clr-namespace:LiveAppsOverlay.Views.Dialogs"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="500">
+    <Grid Margin="0 10 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="{loc:LocExtension rsCapModifier}"></Label>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Modifiers}" SelectedItem="{Binding SelectedModifier}"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="{loc:LocExtension rsCapKey}"></Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Keys}" SelectedItem="{Binding SelectedKey}"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Right">
+            <Button Content="{loc:LocExtension rsCapDone}" Name="ButtonDone" Command="{Binding SetDoneCommand}" Click="ButtonDone_Click" Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

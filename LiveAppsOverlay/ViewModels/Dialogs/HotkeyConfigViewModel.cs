@@ -26,7 +26,7 @@ namespace LiveAppsOverlay.ViewModels.Dialogs
 
         #region Constructors
 
-        public HotkeyConfigViewModel(Action<HotkeyConfigViewModel> closeHandler, KeyBindingConfig keyBindingConfig)
+        public HotkeyConfigViewModel(Action<HotkeyConfigViewModel?> closeHandler, KeyBindingConfig keyBindingConfig)
         {
             // Init View commands
             CloseCommand = new RelayCommand<HotkeyConfigViewModel>(closeHandler);

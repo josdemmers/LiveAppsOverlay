@@ -22,7 +22,7 @@ namespace LiveAppsOverlay.ViewModels.Dialogs
 
         #region Constructors
 
-        public HotkeysConfigViewModel(Action<HotkeysConfigViewModel> closeHandler)
+        public HotkeysConfigViewModel(Action<HotkeysConfigViewModel?> closeHandler)
         {
             // Init services
             _dialogCoordinator = App.Current.Services.GetRequiredService<IDialogCoordinator>();
@@ -78,8 +78,10 @@ namespace LiveAppsOverlay.ViewModels.Dialogs
             CloseCommand.Execute(this);
         }
 
-        private async void KeyBindingConfigExecute(object obj)
+        private async void KeyBindingConfigExecute(object? obj)
         {
+            if (obj == null) return;
+
             var hotkeyConfigDialog = new CustomDialog() { Title = "Hotkey config" };
             var dataContext = new HotkeyConfigViewModel(async instance =>
             {

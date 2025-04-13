@@ -244,15 +244,15 @@ namespace LiveAppsOverlay.ViewModels
             RegisterThumbnail(HandleSource);
         }
 
-        unsafe static RECT GetExtendedFrameBounds(HWND hwnd)
-        {
-            // Note: Returns incorrect data when Windows scaling is changed while source app is running.
+        //unsafe static RECT GetExtendedFrameBounds(HWND hwnd)
+        //{
+        //    // Note: Returns incorrect data when Windows scaling is changed while source app is running.
 
-            // https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute
-            RECT rect = default;
-            PInvoke.DwmGetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, &rect, (uint)sizeof(RECT)).ThrowOnFailure();
-            return rect;
-        }
+        //    // https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute
+        //    RECT rect = default;
+        //    PInvoke.DwmGetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, &rect, (uint)sizeof(RECT)).ThrowOnFailure();
+        //    return rect;
+        //}
 
         private System.Drawing.Size? GetSourceSize()
         {
@@ -388,7 +388,7 @@ namespace LiveAppsOverlay.ViewModels
         {
             if (_thumbnailHandle == IntPtr.Zero) return;
 
-            RECT rectDestination = GetExtendedFrameBounds(Handle);
+            //RECT rectDestination = GetExtendedFrameBounds(Handle);
             System.Drawing.Point sourcePoint = new System.Drawing.Point(0, 0);
             System.Drawing.Size? sourceSize = GetSourceSize();
             if (sourceSize == null) return;

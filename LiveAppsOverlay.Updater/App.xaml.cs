@@ -1,20 +1,20 @@
-﻿using LiveAppsOverlay.Interfaces;
-using LiveAppsOverlay.Services;
-using LiveAppsOverlay.ViewModels;
-using MahApps.Metro.Controls.Dialogs;
+﻿using LiveAppsOverlay.Updater.Interfaces;
+using LiveAppsOverlay.Updater.Services;
+using LiveAppsOverlay.Updater.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Extensions.Logging;
 using System.Configuration;
 using System.Data;
 using System.Windows;
 
-namespace LiveAppsOverlay
+namespace LiveAppsOverlay.Updater
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+
         public App()
         {
             InitializeComponent();
@@ -37,21 +37,14 @@ namespace LiveAppsOverlay
             var services = new ServiceCollection();
 
             // Logging
-            services.AddLogging(loggingBuilder => loggingBuilder.AddNLog(configFileRelativePath: "Config/NLog.config"));
+            services.AddLogging(loggingBuilder => loggingBuilder.AddNLog(configFileRelativePath: "Config/NLog-updater.config"));
 
             // Services
-            services.AddSingleton<IDialogCoordinator, DialogCoordinator>();
+            services.AddSingleton<IDownloadManager, DownloadManager>();
             services.AddSingleton<IHttpClientHandler, HttpClientHandler>();
-            services.AddSingleton<IReleaseManager, ReleaseManager>();
-            services.AddSingleton<ISettingsManager, SettingsManager>();
-            services.AddSingleton<IThumbnailManager, ThumbnailManager>();
 
             // ViewModels
-            services.AddTransient<AppsViewModel>();
-            services.AddTransient<ConfigWindowViewModel>();
             services.AddTransient<MainWindowViewModel>();
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<ThumbnailWindowViewModel>();
 
             return services.BuildServiceProvider();
         }

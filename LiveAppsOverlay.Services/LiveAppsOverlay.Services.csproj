@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LiveAppsOverlay.Entities\LiveAppsOverlay.Entities.csproj" />
     <ProjectReference Include="..\LiveAppsOverlay.Interfaces\LiveAppsOverlay.Interfaces.csproj" />
     <ProjectReference Include="..\LiveAppsOverlay.Messages\LiveAppsOverlay.Messages.csproj" />

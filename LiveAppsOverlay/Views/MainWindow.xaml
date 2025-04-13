@@ -9,8 +9,9 @@
     xmlns:loc="clr-namespace:LiveAppsOverlay.Localization;assembly=LiveAppsOverlay.Localization" 
     xmlns:local="clr-namespace:LiveAppsOverlay.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    mah:DialogParticipation.Register="{Binding}"
     mc:Ignorable="d"
-    Title="Live Apps Overlay" Height="450" Width="950">
+    Title="{Binding WindowTitle}" Height="450" Width="950">
 
     <mah:MetroWindow.Resources>
         <ResourceDictionary>

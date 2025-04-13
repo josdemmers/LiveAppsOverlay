@@ -40,6 +40,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +67,16 @@
     <Resource Include="Images\Flags\trTR.png" />
     <Resource Include="Images\Flags\zhCN.png" />
     <Resource Include="Images\Flags\zhTW.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

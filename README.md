@@ -12,6 +12,10 @@
 
 With Live Apps Overlay you can select any app window or part of it and copy it on top of any other window.
 
+<div align="center">
+<img alt="" title="Ingame overlay" src="./readme/readme-top.png" width="95%"/>
+</div>
+
 ## Features
 
 - Create an overlay from any app window of your choice.

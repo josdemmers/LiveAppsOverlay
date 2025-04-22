@@ -1,5 +1,8 @@
-﻿using System;
+﻿using LiveAppsOverlay.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +25,11 @@ namespace LiveAppsOverlay.Views
     {
         public LoggingView()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                DataContext = App.Current.Services.GetRequiredService<LoggingViewModel>();
+            }
+
             InitializeComponent();
         }
     }

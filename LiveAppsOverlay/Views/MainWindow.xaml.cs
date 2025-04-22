@@ -21,13 +21,13 @@ namespace LiveAppsOverlay.Views
     {
         public MainWindow()
         {
-            InitializeComponent();
-
             // Only set DataContext when not in Design-mode
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 DataContext = App.Current.Services.GetRequiredService<MainWindowViewModel>();
             }
+
+            InitializeComponent();
         }
 
         private void HamburgerMenuControl_ItemInvoked(object sender, MahApps.Metro.Controls.HamburgerMenuItemInvokedEventArgs args)

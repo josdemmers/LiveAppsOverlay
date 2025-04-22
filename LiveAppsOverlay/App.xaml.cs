@@ -49,6 +49,7 @@ namespace LiveAppsOverlay
             // ViewModels
             services.AddTransient<AppsViewModel>();
             services.AddTransient<ConfigWindowViewModel>();
+            services.AddTransient<LoggingViewModel>();
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<ThumbnailWindowViewModel>();

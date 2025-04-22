@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using LiveAppsOverlay.Messages;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -37,12 +39,10 @@ namespace LiveAppsOverlay.Converters
             }
             catch (Exception)
             {
-                // TODO: Add logging converter
-                //var eventAggregator = (IEventAggregator)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(IEventAggregator));
-                //eventAggregator.GetEvent<ExceptionOccurredEvent>().Publish(new ExceptionOccurredEventParams
-                //{
-                //    Message = $"File not found: ./Images/Flags/{(string)value}.png"
-                //});
+                WeakReferenceMessenger.Default.Send(new ExceptionOccurredMessage(new ExceptionOccurredMessageParams
+                {
+                    Message = $"File not found: ./Images/Flags/{(string)value}.png"
+                }));
                 return null;
             }
         }

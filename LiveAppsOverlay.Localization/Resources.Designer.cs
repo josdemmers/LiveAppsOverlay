@@ -88,6 +88,15 @@ namespace LiveAppsOverlay.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Log.
+        /// </summary>
+        internal static string rsCapClearLog {
+            get {
+                return ResourceManager.GetString("rsCapClearLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display name.
         /// </summary>
         internal static string rsCapDisplayName {

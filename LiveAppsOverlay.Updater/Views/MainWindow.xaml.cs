@@ -12,13 +12,13 @@ namespace LiveAppsOverlay.Updater.Views
     {
         public MainWindow()
         {
-            InitializeComponent();
-
             // Only set DataContext when not in Design-mode
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 DataContext = App.Current.Services.GetRequiredService<MainWindowViewModel>();
             }
+
+            InitializeComponent();
         }
     }
 }

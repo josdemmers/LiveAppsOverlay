@@ -100,91 +100,94 @@
   <data name="rsCapApps" xml:space="preserve">
     <value>Apps</value>
   </data>
-  <data name="rsCapLogging" xml:space="preserve">
-    <value>Logging</value>
-  </data>
-  <data name="rsCapSettings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="rsTooltipAddProcess" xml:space="preserve">
-    <value>Add process.</value>
-  </data>
-  <data name="rsTooltipRefreshProcessList" xml:space="preserve">
-    <value>Refresh process list.</value>
-  </data>
-  <data name="rsTooltipRefreshHandle" xml:space="preserve">
-    <value>Refresh handle.</value>
-  </data>
-  <data name="rsTooltipToggleOnOff" xml:space="preserve">
-    <value>Toggle on/off.</value>
-  </data>
-  <data name="rsTooltipConfig" xml:space="preserve">
-    <value>Config.</value>
-  </data>
-  <data name="rsTooltipToggleEditMode" xml:space="preserve">
-    <value>Toggle edit mode.</value>
-  </data>
-  <data name="rsTooltipToggleDragMode" xml:space="preserve">
-    <value>Toggle drag mode.</value>
-  </data>
-  <data name="rsTooltipToggleRegionMode" xml:space="preserve">
-    <value>Toggle region mode.</value>
-  </data>
-  <data name="rsTooltipEnterName" xml:space="preserve">
-    <value>Enter name.</value>
-  </data>
-  <data name="rsTooltipToggleEditModeHotkey" xml:space="preserve">
-    <value>Toggle edit mode hotkey on/off.</value>
-  </data>
-  <data name="rsTooltipCheckForUpdates" xml:space="preserve">
-    <value>Check for updates.</value>
-  </data>
-  <data name="rsTooltipEditMode" xml:space="preserve">
-    <value>Edit mode.</value>
-  </data>
-  <data name="rsTooltipManageHotkeys" xml:space="preserve">
-    <value>Enable/disable and change your hotkeys.</value>
-  </data>
-  <data name="rsCapEditMode" xml:space="preserve">
-    <value>Edit Mode</value>
-  </data>
-  <data name="rsCapDragMode" xml:space="preserve">
-    <value>Drag Mode</value>
-  </data>
-  <data name="rsCapRegionMode" xml:space="preserve">
-    <value>Region Mode</value>
-  </data>
-  <data name="rsCapToggleEditMode" xml:space="preserve">
-    <value>Toggle Edit Mode</value>
+  <data name="rsCapCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="rsCapCheckForUpdates" xml:space="preserve">
     <value>Check for Updates</value>
   </data>
-  <data name="rsCapName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="rsCapFavorites" xml:space="preserve">
-    <value>Favorites</value>
+  <data name="rsCapClearLog" xml:space="preserve">
+    <value>Clear Log</value>
   </data>
   <data name="rsCapDisplayName" xml:space="preserve">
     <value>Display name</value>
   </data>
-  <data name="rsCapProcess" xml:space="preserve">
-    <value>Process</value>
-  </data>
   <data name="rsCapDone" xml:space="preserve">
     <value>Done</value>
   </data>
-  <data name="rsCapCancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="rsCapDragMode" xml:space="preserve">
+    <value>Drag Mode</value>
   </data>
-  <data name="rsCapModifier" xml:space="preserve">
-    <value>Modifier</value>
+  <data name="rsCapEditMode" xml:space="preserve">
+    <value>Edit Mode</value>
+  </data>
+  <data name="rsCapFavorites" xml:space="preserve">
+    <value>Favorites</value>
   </data>
   <data name="rsCapKey" xml:space="preserve">
     <value>Key</value>
   </data>
+  <data name="rsCapLogging" xml:space="preserve">
+    <value>Logging</value>
+  </data>
   <data name="rsCapManageHotkeys" xml:space="preserve">
     <value>Manage Hotkeys</value>
+  </data>
+  <data name="rsCapModifier" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="rsCapName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="rsCapProcess" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="rsCapRegionMode" xml:space="preserve">
+    <value>Region Mode</value>
+  </data>
+  <data name="rsCapSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="rsCapToggleEditMode" xml:space="preserve">
+    <value>Toggle Edit Mode</value>
+  </data>
+  <data name="rsTooltipAddProcess" xml:space="preserve">
+    <value>Add process.</value>
+  </data>
+  <data name="rsTooltipCheckForUpdates" xml:space="preserve">
+    <value>Check for updates.</value>
+  </data>
+  <data name="rsTooltipConfig" xml:space="preserve">
+    <value>Config.</value>
+  </data>
+  <data name="rsTooltipEditMode" xml:space="preserve">
+    <value>Edit mode.</value>
+  </data>
+  <data name="rsTooltipEnterName" xml:space="preserve">
+    <value>Enter name.</value>
+  </data>
+  <data name="rsTooltipManageHotkeys" xml:space="preserve">
+    <value>Enable/disable and change your hotkeys.</value>
+  </data>
+  <data name="rsTooltipRefreshHandle" xml:space="preserve">
+    <value>Refresh handle.</value>
+  </data>
+  <data name="rsTooltipRefreshProcessList" xml:space="preserve">
+    <value>Refresh process list.</value>
+  </data>
+  <data name="rsTooltipToggleDragMode" xml:space="preserve">
+    <value>Toggle drag mode.</value>
+  </data>
+  <data name="rsTooltipToggleEditMode" xml:space="preserve">
+    <value>Toggle edit mode.</value>
+  </data>
+  <data name="rsTooltipToggleEditModeHotkey" xml:space="preserve">
+    <value>Toggle edit mode hotkey on/off.</value>
+  </data>
+  <data name="rsTooltipToggleOnOff" xml:space="preserve">
+    <value>Toggle on/off.</value>
+  </data>
+  <data name="rsTooltipToggleRegionMode" xml:space="preserve">
+    <value>Toggle region mode.</value>
   </data>
 </root>

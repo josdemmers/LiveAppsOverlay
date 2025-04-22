@@ -32,9 +32,8 @@ namespace LiveAppsOverlay.Views
 
         public ThumbnailWindow(HWND handleSource, ThumbnailConfigViewModel thumbnailConfigViewModel)
         {
-            InitializeComponent();
-
             DataContext = App.Current.Services.GetRequiredService<ThumbnailWindowViewModel>();
+            InitializeComponent();
 
             ((ThumbnailWindowViewModel)DataContext).CloseRequest += ThumbnailWindow_CloseRequest;
             ((ThumbnailWindowViewModel)DataContext).HandleSource = handleSource;

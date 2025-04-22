@@ -25,12 +25,12 @@ namespace LiveAppsOverlay.Views
     {
         public AppsView()
         {
-            InitializeComponent();
-
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 DataContext = App.Current.Services.GetRequiredService<AppsViewModel>();
             }
+
+            InitializeComponent();
         }
     }
 }

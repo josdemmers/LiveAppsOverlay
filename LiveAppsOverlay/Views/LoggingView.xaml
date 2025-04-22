@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:loc="clr-namespace:LiveAppsOverlay.Localization;assembly=LiveAppsOverlay.Localization"
              xmlns:local="clr-namespace:LiveAppsOverlay.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <DockPanel>
+        <Button DockPanel.Dock="Top" HorizontalAlignment="Left" BorderThickness="0" Focusable="False"
+            Content="{loc:LocExtension rsCapClearLog}"
+            Command="{Binding ClearLogMessagesCommand}"/>
+        <ListBox ItemsSource="{Binding Path=LogMessages}"/>
+    </DockPanel>
 </UserControl>

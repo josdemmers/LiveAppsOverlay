@@ -11,6 +11,7 @@ using LiveAppsOverlay.Views;
 using LiveAppsOverlay.Views.Dialogs;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,6 +32,7 @@ namespace LiveAppsOverlay.ViewModels
     public class AppsViewModel : ObservableObject
     {
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly ILogger _logger;
         private readonly ISettingsManager _settingsManager;
         private readonly IThumbnailManager _thumbnailManager;
 
@@ -44,10 +46,11 @@ namespace LiveAppsOverlay.ViewModels
 
         #region Constructors
 
-        public AppsViewModel(IDialogCoordinator dialogCoordinator, ISettingsManager settingsManager, IThumbnailManager thumbnailManager)
+        public AppsViewModel(IDialogCoordinator dialogCoordinator, ILogger<AppsViewModel> logger, ISettingsManager settingsManager, IThumbnailManager thumbnailManager)
         {
             // Init Services
             _dialogCoordinator = dialogCoordinator;
+            _logger = logger;
             _settingsManager = settingsManager;
             _thumbnailManager = thumbnailManager;
 
@@ -268,8 +271,7 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        // TODO: Add log message for RemoveFavoriteProcessEntryExecute
-                        //_logger.LogInformation($"Removed \"{favoriteProcessEntryViewModel.DisplayName}\"");
+                        _logger.LogInformation($"Removed \"{favoriteProcessEntryViewModel.DisplayName}\"");
 
                         FavoriteProcessEntries.Remove(favoriteProcessEntryViewModel);
                         _thumbnailManager.RemoveFavoriteProcessEntry(favoriteProcessEntryViewModel.Model);
@@ -329,8 +331,7 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        // TODO: Add log message for ThumbnailConfigRemoveExecute
-                        //_logger.LogInformation($"Removed \"{ThumbnailConfigRemoveExecute.Name}\"");
+                        _logger.LogInformation($"Removed \"{thumbnailConfigViewModel?.Name}\"");
 
                         SelectedFavoriteProcessEntryViewModel?.RemoveTumbnailConfig(thumbnailConfigViewModel);
                         _thumbnailManager.SaveFavorites();

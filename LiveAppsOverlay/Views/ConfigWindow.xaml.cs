@@ -27,12 +27,12 @@ namespace LiveAppsOverlay.Views
 
         public ConfigWindow()
         {
-            InitializeComponent();
-
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 DataContext = App.Current.Services.GetRequiredService<ConfigWindowViewModel>();
             }
+
+            InitializeComponent();
         }
 
         #endregion

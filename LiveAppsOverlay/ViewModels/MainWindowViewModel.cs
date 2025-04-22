@@ -111,11 +111,10 @@ namespace LiveAppsOverlay.ViewModels
                     _releaseManager.UpdateAvailable = true;
                     WindowTitle = $"Live Apps Overlay v{Assembly.GetExecutingAssembly().GetName().Version} ({release.Version} available)";
 
-                    //TODO: Add logging new version
-                    //_eventAggregator.GetEvent<InfoOccurredEvent>().Publish(new InfoOccurredEventParams
-                    //{
-                    //    Message = $"New version available: {release.Version}"
-                    //});
+                    WeakReferenceMessenger.Default.Send(new InfoOccurredMessage(new InfoOccurredMessageParams
+                    {
+                        Message = $"New version available: {release.Version}"
+                    }));
 
                     // Open update dialog
                     if (File.Exists("LiveAppsOverlay.Updater.exe"))
@@ -165,11 +164,11 @@ namespace LiveAppsOverlay.ViewModels
         private void HotkeyManager_HotkeyAlreadyRegistered(object? sender, HotkeyAlreadyRegisteredEventArgs hotkeyAlreadyRegisteredEventArgs)
         {
             _logger.LogWarning($"The hotkey {hotkeyAlreadyRegisteredEventArgs.Name} is already registered by another application.");
-            // TODO: Add logging hotkeys
-            //_eventAggregator.GetEvent<WarningOccurredEvent>().Publish(new WarningOccurredEventParams
-            //{
-            //    Message = $"The hotkey \"{hotkeyAlreadyRegisteredEventArgs.Name}\" is already registered by another application."
-            //});
+
+            WeakReferenceMessenger.Default.Send(new WarningOccurredMessage(new WarningOccurredMessageParams
+            {
+                Message = $"The hotkey \"{hotkeyAlreadyRegisteredEventArgs.Name}\" is already registered by another application."
+            }));
         }
 
         private void ToggleEditModeKeyBindingExecute(object? sender, HotkeyEventArgs hotkeyEventArgs)
@@ -206,11 +205,11 @@ namespace LiveAppsOverlay.ViewModels
             catch (HotkeyAlreadyRegisteredException exception)
             {
                 _logger.LogError(exception, MethodBase.GetCurrentMethod()?.Name);
-                // TODO: Add logging hotkeys
-                //_eventAggregator.GetEvent<ErrorOccurredEvent>().Publish(new ErrorOccurredEventParams
-                //{
-                //    Message = $"The hotkey \"{exception.Name}\" is already registered by another application."
-                //});
+
+                WeakReferenceMessenger.Default.Send(new ErrorOccurredMessage(new ErrorOccurredMessageParams
+                {
+                    Message = $"The hotkey \"{exception.Name}\" is already registered by another application."
+                }));
             }
             catch (Exception exception)
             {

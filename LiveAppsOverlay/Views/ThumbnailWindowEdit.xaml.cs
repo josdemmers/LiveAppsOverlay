@@ -37,9 +37,8 @@ namespace LiveAppsOverlay.Views
 
         public ThumbnailWindowEdit(HWND handleSource, ThumbnailConfigViewModel thumbnailConfigViewModel)
         {
-            InitializeComponent();
-
             DataContext = App.Current.Services.GetRequiredService<ThumbnailWindowViewModel>();
+            InitializeComponent();
 
             ((ThumbnailWindowViewModel)DataContext).CloseRequest += ThumbnailWindow_CloseRequest;
             ((ThumbnailWindowViewModel)DataContext).DrawRegionCanceled += ThumbnailWindow_DrawRegionCanceled;

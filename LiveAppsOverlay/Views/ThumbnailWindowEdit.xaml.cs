@@ -47,6 +47,8 @@ namespace LiveAppsOverlay.Views
 
             this.Top = thumbnailConfigViewModel.Top;
             this.Left = thumbnailConfigViewModel.Left;
+            this.Height = thumbnailConfigViewModel.Height;
+            this.Width = thumbnailConfigViewModel.Width;
         }
 
         #endregion

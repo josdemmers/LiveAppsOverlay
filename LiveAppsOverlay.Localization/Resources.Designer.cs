@@ -277,6 +277,15 @@ namespace LiveAppsOverlay.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next handle..
+        /// </summary>
+        internal static string rsTooltipNextHandle {
+            get {
+                return ResourceManager.GetString("rsTooltipNextHandle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh handle..
         /// </summary>
         internal static string rsTooltipRefreshHandle {

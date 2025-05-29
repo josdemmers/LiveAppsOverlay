@@ -141,6 +141,9 @@
                     <Button Padding="5 0 5 0" Command="{Binding RefreshSelectedFavoriteProcessEntryHandleCommand}" ToolTip="{loc:LocExtension rsTooltipRefreshHandle}">
                         <iconPacks:PackIconMaterial Kind="Refresh" />
                     </Button>
+                    <Button Padding="5 0 5 0" Command="{Binding NextSelectedFavoriteProcessEntryHandleCommand}" ToolTip="{loc:LocExtension rsTooltipNextHandle}">
+                        <iconPacks:PackIconMaterial Kind="SkipNext" />
+                    </Button>
                     <Button Padding="5 0 5 0" Foreground="{Binding Path=SelectedFavoriteProcessEntryViewModel.IsAnyThumbnailActive, Converter={x:Static converters:BooleanToRedGreenBrushConverter.Instance}}" ToolTip="{loc:LocExtension rsTooltipToggleOnOff}"
                             Command="{Binding ThumbnailConfigsToggleAllCommand}">
                         <iconPacks:PackIconMaterial Kind="Power" />

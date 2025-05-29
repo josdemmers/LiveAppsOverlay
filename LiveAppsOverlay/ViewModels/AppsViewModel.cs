@@ -63,6 +63,7 @@ namespace LiveAppsOverlay.ViewModels
 
             // Init View commands
             AddProcessEntryCommand = new RelayCommand(AddProcessEntryExecute, CanAddProcessEntryExecute);
+            NextSelectedFavoriteProcessEntryHandleCommand = new RelayCommand(NextSelectedFavoriteProcessEntryHandleExecute, CanNextSelectedFavoriteProcessEntryHandleExecute);
             RefreshProcessEntryListCommand = new RelayCommand(RefreshProcessEntryListExecute);
             RefreshSelectedFavoriteProcessEntryHandleCommand = new RelayCommand(RefreshSelectedFavoriteProcessEntryHandleExecute, CanRefreshSelectedFavoriteProcessEntryHandleExecute);
             RemoveFavoriteProcessEntryCommand = new RelayCommand<FavoriteProcessEntryViewModel>(RemoveFavoriteProcessEntryExecute, CanRemoveFavoriteProcessEntryExecute);
@@ -86,6 +87,7 @@ namespace LiveAppsOverlay.ViewModels
         public ObservableCollection<ProcessEntry> ProcessEntries { get => _processEntries; set => _processEntries = value; }
 
         public ICommand AddProcessEntryCommand { get; }
+        public ICommand NextSelectedFavoriteProcessEntryHandleCommand { get; }
         public ICommand RefreshProcessEntryListCommand { get; }
         public ICommand RefreshSelectedFavoriteProcessEntryHandleCommand { get; }
         public ICommand RemoveFavoriteProcessEntryCommand { get; }
@@ -123,6 +125,7 @@ namespace LiveAppsOverlay.ViewModels
             {
                 SetProperty(ref _selectedFavoriteProcessEntryViewModel, value);
                 IsFavoriteProcessEntrySelected = SelectedFavoriteProcessEntryViewModel != null;
+                ((RelayCommand)NextSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)RefreshSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
             }
         }
@@ -209,9 +212,10 @@ namespace LiveAppsOverlay.ViewModels
 
         private bool CanAddProcessEntryExecute()
         {
-            if(SelectedProcessEntry == null) return false;
+            return SelectedProcessEntry != null;
 
-            return !FavoriteProcessEntries.Any(f => f.Name.Equals(SelectedProcessEntry.Name));
+            // No duplicates allowed
+            //return !FavoriteProcessEntries.Any(f => f.Name.Equals(SelectedProcessEntry.Name));
         }
 
         private void AddProcessEntryExecute()
@@ -226,6 +230,92 @@ namespace LiveAppsOverlay.ViewModels
             _thumbnailManager.AddFavoriteProcessEntry(favoriteProcessEntry);
 
             ((RelayCommand)AddProcessEntryCommand).NotifyCanExecuteChanged();
+        }
+
+        private bool CanNextSelectedFavoriteProcessEntryHandleExecute()
+        {
+            return SelectedFavoriteProcessEntryViewModel != null;
+
+            //if (SelectedFavoriteProcessEntryViewModel == null) return false;
+
+            //return !SelectedFavoriteProcessEntryViewModel.IsAnyThumbnailActive;
+        }
+
+        //private void NextSelectedFavoriteProcessEntryHandleExecute()
+        //{
+        //    var processes = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel?.Name).Where(p => p.MainWindowHandle != 0).ToList();
+
+        //    if (processes.Count == 0)
+        //    {
+        //        SelectedFavoriteProcessEntryViewModel.Handle = 0;
+        //    }
+        //    else if (!processes.Any(p => p.MainWindowHandle == SelectedFavoriteProcessEntryViewModel.Handle))
+        //    {
+        //        SelectedFavoriteProcessEntryViewModel.Handle = processes[0].MainWindowHandle;
+        //    }
+        //    else
+        //    {
+        //        int currentIndex = processes.FindIndex(p => p.MainWindowHandle == SelectedFavoriteProcessEntryViewModel.Handle);
+        //        int newIndex = currentIndex + 1 > processes.Count - 1 ? 0 : currentIndex + 1;
+        //        SelectedFavoriteProcessEntryViewModel.Handle = processes[newIndex].MainWindowHandle;
+        //    }
+
+        //    ((RelayCommand)ThumbnailConfigsToggleAllCommand).NotifyCanExecuteChanged();
+        //}
+
+        private void NextSelectedFavoriteProcessEntryHandleExecute()
+        {
+            // First disable all active thumbnails before changing the process handle.
+            if (SelectedFavoriteProcessEntryViewModel?.IsAnyThumbnailActive ?? false)
+            {
+                foreach (var thumbnailConfigViewModel in SelectedFavoriteProcessEntryViewModel.ThumbnailConfigs.OfType<ThumbnailConfigViewModel>())
+                {
+                    thumbnailConfigViewModel.IsActive = false;
+                }
+            }
+
+            // Select the next available process handle.
+            var processes = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel?.Name).Where(p => p.MainWindowHandle != 0).ToList();
+
+            if (processes.Count == 0)
+            {
+                SelectedFavoriteProcessEntryViewModel.Handle = 0;
+            }
+            else if (!processes.Any(p => p.MainWindowHandle == SelectedFavoriteProcessEntryViewModel.Handle))
+            {
+                SelectedFavoriteProcessEntryViewModel.Handle = processes[0].MainWindowHandle;
+            }
+            else
+            {
+                int currentIndex = processes.FindIndex(p => p.MainWindowHandle == SelectedFavoriteProcessEntryViewModel.Handle);
+                int newIndex = currentIndex + 1 > processes.Count - 1 ? 0 : currentIndex + 1;
+                SelectedFavoriteProcessEntryViewModel.Handle = processes[newIndex].MainWindowHandle;
+            }
+
+            ((RelayCommand)RefreshSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
+            ((RelayCommand)ThumbnailConfigsToggleAllCommand).NotifyCanExecuteChanged();
+
+            if (SelectedFavoriteProcessEntryViewModel.Handle == 0) return;
+
+            // Create thumbnails for the new process handle.
+            foreach (var thumbnailConfigViewModel in SelectedFavoriteProcessEntryViewModel.ThumbnailConfigs.OfType<ThumbnailConfigViewModel>())
+            {
+                thumbnailConfigViewModel.IsActive = thumbnailConfigViewModel.IsEnabled;
+                thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+                if (thumbnailConfigViewModel.IsActive)
+                {
+                    if (_settingsManager.Settings.IsEditModeEnabled)
+                    {
+                        ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        thumbnailWindow.Show();
+                    }
+                    else
+                    {
+                        ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        thumbnailWindow.Show();
+                    }
+                }
+            }
         }
 
         private void RefreshProcessEntryListExecute()

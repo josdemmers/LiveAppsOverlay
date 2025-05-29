@@ -169,6 +169,9 @@
   <data name="rsTooltipManageHotkeys" xml:space="preserve">
     <value>Enable/disable and change your hotkeys.</value>
   </data>
+  <data name="rsTooltipNextHandle" xml:space="preserve">
+    <value>Next handle.</value>
+  </data>
   <data name="rsTooltipRefreshHandle" xml:space="preserve">
     <value>Refresh handle.</value>
   </data>

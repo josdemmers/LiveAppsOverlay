@@ -88,6 +88,16 @@ namespace LiveAppsOverlay.ViewModels.Entities
             }
         }
 
+        public bool IsAspectRatioLocked
+        {
+            get => Model.IsAspectRatioLocked;
+            set
+            {
+                Model.IsAspectRatioLocked = value;
+                OnPropertyChanged(nameof(IsAspectRatioLocked));
+            }
+        }
+
         public bool IsEnabled
         {
             get => Model.IsEnabled;

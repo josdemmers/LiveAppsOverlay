@@ -58,12 +58,25 @@ namespace LiveAppsOverlay.ViewModels
 
                 OnPropertyChanged(nameof(IsEditModeEnabled));
                 OnPropertyChanged(nameof(IsDragModeButtonEnabled));
+                OnPropertyChanged(nameof(IsLockAspectRatioButtonEnabled));
                 OnPropertyChanged(nameof(IsOpacityEditEnabled));
                 OnPropertyChanged(nameof(IsRegionModeButtonEnabled));
 
                 WeakReferenceMessenger.Default.Send(new ThumbnailEditModeChangedMessage(new ThumbnailEditModeChangedMessageParams()));
             }
         }
+
+        public bool IsLockAspectRatioEnabled
+        {
+            get => ThumbnailConfigViewModel.IsAspectRatioLocked;
+            set
+            {
+                ThumbnailConfigViewModel.IsAspectRatioLocked = value;
+                OnPropertyChanged(nameof(IsLockAspectRatioEnabled));
+            }
+        }
+
+        public bool IsLockAspectRatioButtonEnabled => IsEditModeEnabled;
 
         public bool IsOpacityEditEnabled => !IsEditModeEnabled;
 
@@ -88,6 +101,8 @@ namespace LiveAppsOverlay.ViewModels
                 _thumbnailConfigViewModel.PropertyChanged += ThumbnailConfigViewModel_PropertyChanged;
 
                 OnPropertyChanged(nameof(IsDragModeEnabled));
+                OnPropertyChanged(nameof(IsLockAspectRatioButtonEnabled));
+                OnPropertyChanged(nameof(IsLockAspectRatioEnabled));
                 OnPropertyChanged(nameof(IsRegionModeEnabled));
                 OnPropertyChanged(nameof(Opacity));
                 OnPropertyChanged(nameof(Title));
@@ -127,6 +142,7 @@ namespace LiveAppsOverlay.ViewModels
         {
             OnPropertyChanged(nameof(IsEditModeEnabled));
             OnPropertyChanged(nameof(IsDragModeButtonEnabled));
+            OnPropertyChanged(nameof(IsLockAspectRatioButtonEnabled));
             OnPropertyChanged(nameof(IsOpacityEditEnabled));
             OnPropertyChanged(nameof(IsRegionModeButtonEnabled));
         }
@@ -134,6 +150,7 @@ namespace LiveAppsOverlay.ViewModels
         private void ThumbnailConfigViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(IsDragModeEnabled));
+            OnPropertyChanged(nameof(IsLockAspectRatioEnabled));
             OnPropertyChanged(nameof(IsRegionModeEnabled));
         }
 

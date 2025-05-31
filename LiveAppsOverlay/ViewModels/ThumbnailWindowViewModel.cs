@@ -64,18 +64,7 @@ namespace LiveAppsOverlay.ViewModels
         public double ActualHeight { get; set; }
         public double ActualHeightPixels { get; set; }
         public double ActualWidth { get; set; }
-        
         public double ActualWidthPixels { get; set; }
-
-        public bool IsDragModeEnabled
-        {
-            get => ThumbnailConfigViewModel.IsDragModeEnabled;
-            set
-            {
-                ThumbnailConfigViewModel.IsDragModeEnabled = value;
-                OnPropertyChanged(nameof(IsDragModeEnabled));
-            }
-        }
 
         public int Height
         {
@@ -105,6 +94,26 @@ namespace LiveAppsOverlay.ViewModels
             set => SetProperty(ref _handleSource, value);
         }
 
+        public bool IsDragModeEnabled
+        {
+            get => ThumbnailConfigViewModel.IsDragModeEnabled;
+            set
+            {
+                ThumbnailConfigViewModel.IsDragModeEnabled = value;
+                OnPropertyChanged(nameof(IsDragModeEnabled));
+            }
+        }
+
+        public bool IsRegionModeEnabled
+        {
+            get => ThumbnailConfigViewModel.IsRegionModeEnabled;
+            set
+            {
+                ThumbnailConfigViewModel.IsRegionModeEnabled = value;
+                OnPropertyChanged(nameof(IsRegionModeEnabled));
+            }
+        }
+
         public double Left
         {
             get => ThumbnailConfigViewModel.Left;
@@ -127,13 +136,16 @@ namespace LiveAppsOverlay.ViewModels
             }
         }
 
-        public bool IsRegionModeEnabled
+        public double Ratio
         {
-            get => ThumbnailConfigViewModel.IsRegionModeEnabled;
-            set
+            get
             {
-                ThumbnailConfigViewModel.IsRegionModeEnabled = value;
-                OnPropertyChanged(nameof(IsRegionModeEnabled));
+                double xRatio = 1.0;
+                if (!_regionSource.IsEmpty)
+                {
+                    xRatio = (_regionSource.Width) / (_regionSource.Height);
+                }
+                return xRatio;
             }
         }
 

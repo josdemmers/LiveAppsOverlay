@@ -85,6 +85,7 @@ namespace LiveAppsOverlay.Views
             IEnumerable children = LogicalTreeHelper.GetChildren(this);
             double height = 0;
             double width = 0;
+
             foreach (object child in children)
             {
                 if (child is DependencyObject)
@@ -164,6 +165,21 @@ namespace LiveAppsOverlay.Views
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (((ThumbnailWindowViewModel)DataContext).ThumbnailConfigViewModel.IsAspectRatioLocked)
+            {
+                this.SizeChanged -= Window_SizeChanged;
+                double ratio = ((ThumbnailWindowViewModel)DataContext).Ratio;
+                if (e.HeightChanged)
+                {
+                    this.Width = e.NewSize.Height * ratio;
+                }
+                else if (e.WidthChanged)
+                {
+                    this.Height = e.NewSize.Width / ratio;
+                }
+                this.SizeChanged += Window_SizeChanged;
+            }
+
             UpdateActualSize();
         }
 

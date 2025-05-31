@@ -127,6 +127,9 @@
   <data name="rsCapKey" xml:space="preserve">
     <value>Key</value>
   </data>
+  <data name="rsCapLockAspectRatio" xml:space="preserve">
+    <value>Lock Aspect Ratio</value>
+  </data>
   <data name="rsCapLogging" xml:space="preserve">
     <value>Logging</value>
   </data>
@@ -186,6 +189,9 @@
   </data>
   <data name="rsTooltipToggleEditModeHotkey" xml:space="preserve">
     <value>Toggle edit mode hotkey on/off.</value>
+  </data>
+  <data name="rsTooltipToggleLockAspectRatio" xml:space="preserve">
+    <value>Toggle lock aspect ratio.</value>
   </data>
   <data name="rsTooltipToggleOnOff" xml:space="preserve">
     <value>Toggle on/off.</value>

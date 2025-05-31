@@ -151,6 +151,15 @@ namespace LiveAppsOverlay.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock Aspect Ratio.
+        /// </summary>
+        internal static string rsCapLockAspectRatio {
+            get {
+                return ResourceManager.GetString("rsCapLockAspectRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logging.
         /// </summary>
         internal static string rsCapLogging {
@@ -327,6 +336,15 @@ namespace LiveAppsOverlay.Localization {
         internal static string rsTooltipToggleEditModeHotkey {
             get {
                 return ResourceManager.GetString("rsTooltipToggleEditModeHotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle lock aspect ratio..
+        /// </summary>
+        internal static string rsTooltipToggleLockAspectRatio {
+            get {
+                return ResourceManager.GetString("rsTooltipToggleLockAspectRatio", resourceCulture);
             }
         }
         

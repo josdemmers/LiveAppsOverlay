@@ -64,6 +64,19 @@
                 </Label>
             </Grid>
 
+            <Grid>
+                <mah:ToggleSwitch 
+                    Margin="0 0 0 0"
+                    IsEnabled="{Binding IsLockAspectRatioButtonEnabled}"
+                    IsOn="{Binding IsLockAspectRatioEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="{loc:LocExtension rsCapLockAspectRatio}"
+                    OnContent="{loc:LocExtension rsCapLockAspectRatio}"
+                    ToolTip="{loc:LocExtension rsTooltipToggleLockAspectRatio}"/>
+                <Label Margin="0 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="{loc:LocExtension rsTooltipToggleLockAspectRatio}">
+                    <iconPacks:PackIconMaterial Kind="InformationOutline" Width="16" Height="16"/>
+                </Label>
+            </Grid>
+
             <mah:MetroHeader Margin="0 0 0 5" Header="Opacity" Foreground="White" IsEnabled="{Binding IsOpacityEditEnabled}">
                 <mah:NumericUpDown 
                     Minimum="0"      

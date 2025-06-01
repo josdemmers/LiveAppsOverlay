@@ -143,7 +143,7 @@ namespace LiveAppsOverlay.ViewModels
                 double xRatio = 1.0;
                 if (!_regionSource.IsEmpty)
                 {
-                    xRatio = (_regionSource.Width) / (_regionSource.Height);
+                    xRatio = (double)_regionSource.Width / (double)_regionSource.Height;
                 }
                 return xRatio;
             }

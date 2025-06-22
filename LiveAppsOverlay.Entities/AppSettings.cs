@@ -11,7 +11,7 @@ namespace LiveAppsOverlay.Entities
     public class AppSettings
     {
         public bool IsCheckForUpdatesEnabled { get; set; } = true;
-        public bool IsEditModeEnabled { get; set; } = true;
+        //public bool IsEditModeEnabled { get; set; } = true;
         public string SelectedAppLanguage { get; set; } = "en-US";
 
         public KeyBindingConfig KeyBindingConfigToggleEditMode { get; set; } = new KeyBindingConfig

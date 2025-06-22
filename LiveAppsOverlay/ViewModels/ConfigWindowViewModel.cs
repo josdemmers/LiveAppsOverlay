@@ -11,19 +11,13 @@ namespace LiveAppsOverlay.ViewModels
 {
     public class ConfigWindowViewModel : ObservableObject
     {
-        private readonly ISettingsManager _settingsManager;
-
         private ThumbnailConfigViewModel _thumbnailConfigViewModel = new ThumbnailConfigViewModel(new ThumbnailConfig());
         private string _title = "Config";
 
         #region Constructors
 
-        public ConfigWindowViewModel(ISettingsManager settingsManager)
+        public ConfigWindowViewModel()
         {
-            // Init services
-            _settingsManager = settingsManager;
-            _settingsManager.SettingsChanged += SettingsManager_SettingsChanged;
-
             // Init View commands
             WindowClosingCommand = new RelayCommand(WindowClosingExecute);
         }
@@ -50,19 +44,16 @@ namespace LiveAppsOverlay.ViewModels
 
         public bool IsEditModeEnabled
         {
-            get => _settingsManager.Settings.IsEditModeEnabled;
+            get => ThumbnailConfigViewModel.IsEditModeEnabled;
             set
             {
-                _settingsManager.Settings.IsEditModeEnabled = value;
-                _settingsManager.SaveSettings();
+                ThumbnailConfigViewModel.IsEditModeEnabled = value;
 
                 OnPropertyChanged(nameof(IsEditModeEnabled));
                 OnPropertyChanged(nameof(IsDragModeButtonEnabled));
                 OnPropertyChanged(nameof(IsLockAspectRatioButtonEnabled));
                 OnPropertyChanged(nameof(IsOpacityEditEnabled));
                 OnPropertyChanged(nameof(IsRegionModeButtonEnabled));
-
-                WeakReferenceMessenger.Default.Send(new ThumbnailEditModeChangedMessage(new ThumbnailEditModeChangedMessageParams()));
             }
         }
 
@@ -138,15 +129,6 @@ namespace LiveAppsOverlay.ViewModels
 
         #region Event handlers
 
-        private void SettingsManager_SettingsChanged(object? sender, EventArgs e)
-        {
-            OnPropertyChanged(nameof(IsEditModeEnabled));
-            OnPropertyChanged(nameof(IsDragModeButtonEnabled));
-            OnPropertyChanged(nameof(IsLockAspectRatioButtonEnabled));
-            OnPropertyChanged(nameof(IsOpacityEditEnabled));
-            OnPropertyChanged(nameof(IsRegionModeButtonEnabled));
-        }
-
         private void ThumbnailConfigViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(IsDragModeEnabled));
@@ -156,7 +138,6 @@ namespace LiveAppsOverlay.ViewModels
 
         private void WindowClosingExecute()
         {
-            _settingsManager.SettingsChanged -= SettingsManager_SettingsChanged;
             _thumbnailConfigViewModel.PropertyChanged -= ThumbnailConfigViewModel_PropertyChanged;
         }
 

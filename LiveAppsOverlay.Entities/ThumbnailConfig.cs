@@ -12,6 +12,7 @@ namespace LiveAppsOverlay.Entities
     {
         public int Height { get; set; } = 450;
         public bool IsAspectRatioLocked { get; set; } = true;
+        public bool IsEditModeEnabled {  get; set; } = true;
         public bool IsEnabled { get; set; } = true;
         public double Left { get; set; } = 0;
         public string Name { get; set; } = string.Empty;

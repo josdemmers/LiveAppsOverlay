@@ -36,9 +36,6 @@ namespace LiveAppsOverlay.ViewModels
             _settingsManager = settingsManager;
             _settingsManager.SettingsChanged += SettingsManager_SettingsChanged;
 
-            // Init Messages
-            WeakReferenceMessenger.Default.Register<ToggleEditModeKeyBindingMessage>(this, HandleToggleEditModeKeyBindingMessage);
-
             // Init View commands
             SetHotkeysCommand = new RelayCommand(SetHotkeysExecute);
 
@@ -68,20 +65,6 @@ namespace LiveAppsOverlay.ViewModels
             }
         }
 
-        public bool IsEditModeEnabled
-        {
-            get => _settingsManager.Settings.IsEditModeEnabled;
-            set
-            {
-                _settingsManager.Settings.IsEditModeEnabled = value;
-                OnPropertyChanged(nameof(IsEditModeEnabled));
-
-                _settingsManager.SaveSettings();
-
-                WeakReferenceMessenger.Default.Send(new ThumbnailEditModeChangedMessage(new ThumbnailEditModeChangedMessageParams()));
-            }
-        }
-
         public AppLanguage SelectedAppLanguage
         {
             get => _selectedAppLanguage;
@@ -103,13 +86,6 @@ namespace LiveAppsOverlay.ViewModels
 
         #region Event handlers
 
-        private void HandleToggleEditModeKeyBindingMessage(object recipient, ToggleEditModeKeyBindingMessage message)
-        {
-            ToggleEditModeKeyBindingMessageParams toggleEditModeKeyBindingMessageParams = message.Value;
-
-            IsEditModeEnabled = !_settingsManager.Settings.IsEditModeEnabled;
-        }
-
         private async void SetHotkeysExecute()
         {
             var hotkeysConfigDialog = new CustomDialog() { Title = "Hotkeys config" };
@@ -124,7 +100,7 @@ namespace LiveAppsOverlay.ViewModels
 
         private void SettingsManager_SettingsChanged(object? sender, EventArgs e)
         {
-            OnPropertyChanged(nameof(IsEditModeEnabled));
+            
         }
 
         #endregion

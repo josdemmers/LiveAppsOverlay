@@ -20,8 +20,6 @@ namespace LiveAppsOverlay.ViewModels
 {
     public class ThumbnailWindowViewModel : ObservableObject
     {
-        private readonly ISettingsManager _settingsManager;
-
         private HWND _handle = HWND.Null;
         private HWND _handleSource = HWND.Null;
         private RECT _regionSource = new RECT();
@@ -39,9 +37,6 @@ namespace LiveAppsOverlay.ViewModels
             MenuRegionModeCommand = new RelayCommand(MenuRegionModeExecute);
             MenuResetCommand = new RelayCommand(MenuResetExecute);
             OpenConfigCommand = new RelayCommand(OpenConfigExecute);
-
-            // Init Services
-            _settingsManager = settingsManager;
         }
 
         #endregion
@@ -126,7 +121,7 @@ namespace LiveAppsOverlay.ViewModels
 
         public int Opacity
         {
-            get => _settingsManager.Settings.IsEditModeEnabled ? 150 : ThumbnailConfigViewModel.Opacity;
+            get => ThumbnailConfigViewModel.IsEditModeEnabled ? 150 : ThumbnailConfigViewModel.Opacity;
             set
             {
                 ThumbnailConfigViewModel.Opacity = value;

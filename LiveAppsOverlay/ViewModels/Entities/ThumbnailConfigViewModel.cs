@@ -98,6 +98,16 @@ namespace LiveAppsOverlay.ViewModels.Entities
             }
         }
 
+        public bool IsEditModeEnabled
+        {
+            get => Model.IsEditModeEnabled;
+            set
+            {
+                Model.IsEditModeEnabled = value;
+                OnPropertyChanged(nameof(IsEditModeEnabled));
+            }
+        }
+
         public bool IsEnabled
         {
             get => Model.IsEnabled;

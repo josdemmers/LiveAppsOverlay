@@ -99,6 +99,16 @@ namespace LiveAppsOverlay.ViewModels
             }
         }
 
+        public bool IsEditModeEnabled
+        {
+            get => ThumbnailConfigViewModel.IsEditModeEnabled;
+            set
+            {
+                ThumbnailConfigViewModel.IsEditModeEnabled = value;
+                OnPropertyChanged(nameof(IsEditModeEnabled));
+            }
+        }
+
         public bool IsRegionModeEnabled
         {
             get => ThumbnailConfigViewModel.IsRegionModeEnabled;
@@ -234,11 +244,26 @@ namespace LiveAppsOverlay.ViewModels
             }
             else
             {
+                // Specific properties
                 if (eventArgs.PropertyName?.Equals(nameof(Opacity)) ?? false)
                 {
                     OnPropertyChanged(nameof(Opacity));
                     UpdateThumbnail();
                 }
+                else if (eventArgs.PropertyName?.Equals(nameof(IsEditModeEnabled)) ?? false)
+                {
+                    WeakReferenceMessenger.Default.Send(new ThumbnailWindowEditModeChangedMessage(new ThumbnailWindowEditModeChangedMessageParams 
+                    {
+                        HandleSource = HandleSource,
+                        ThumbnailConfigViewModel = ThumbnailConfigViewModel
+                    }));
+                }
+
+                // All properties
+                WeakReferenceMessenger.Default.Send(new ThumbnailWindowChangedMessage(new ThumbnailWindowChangedMessageParams
+                {
+                    HandleSource = HandleSource
+                }));
             }
         }
 

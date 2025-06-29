@@ -7,6 +7,25 @@ using System.Threading.Tasks;
 
 namespace LiveAppsOverlay.Messages
 {
+    public class ThumbnailWindowChangedMessage(ThumbnailWindowChangedMessageParams thumbnailWindowChangedMessageParams) : ValueChangedMessage<ThumbnailWindowChangedMessageParams>(thumbnailWindowChangedMessageParams)
+    {
+    }
+
+    public class ThumbnailWindowChangedMessageParams
+    {
+        public nint HandleSource { get; set; }
+    }
+
+    public class ThumbnailWindowEditModeChangedMessage(ThumbnailWindowEditModeChangedMessageParams thumbnailWindowEditModeChangedMessageParams) : ValueChangedMessage<ThumbnailWindowEditModeChangedMessageParams>(thumbnailWindowEditModeChangedMessageParams)
+    {
+    }
+
+    public class ThumbnailWindowEditModeChangedMessageParams
+    {
+        public nint HandleSource { get; set; }
+        public object? ThumbnailConfigViewModel { get; set; }
+    }
+
     public class ThumbnailWindowOpenConfigMessage(ThumbnailWindowOpenConfigMessageParams thumbnailWindowOpenConfigMessageParams) : ValueChangedMessage<ThumbnailWindowOpenConfigMessageParams>(thumbnailWindowOpenConfigMessageParams)
     {
     }

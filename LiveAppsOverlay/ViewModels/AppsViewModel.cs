@@ -58,6 +58,8 @@ namespace LiveAppsOverlay.ViewModels
             WeakReferenceMessenger.Default.Register<ApplicationClosingMessage>(this, HandleApplicationClosingMessage);
             WeakReferenceMessenger.Default.Register<ApplicationLoadedMessage>(this, HandleApplicationLoadedMessage);
             WeakReferenceMessenger.Default.Register<ThumbnailConfigModifiedMessage>(this, HandleThumbnailConfigModifiedMessage);
+            WeakReferenceMessenger.Default.Register<ThumbnailWindowChangedMessage>(this, HandleThumbnailWindowChangedMessage);
+            WeakReferenceMessenger.Default.Register<ThumbnailWindowEditModeChangedMessage>(this, HandleThumbnailWindowEditModeChangedMessage);
             WeakReferenceMessenger.Default.Register<ThumbnailWindowOpenConfigMessage>(this, HandleThumbnailWindowOpenConfigMessage);
             WeakReferenceMessenger.Default.Register<ToggleEditModeKeyBindingMessage>(this, HandleToggleEditModeKeyBindingMessage);
 
@@ -164,6 +166,38 @@ namespace LiveAppsOverlay.ViewModels
             ((RelayCommand)RefreshSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
         }
 
+        private void HandleThumbnailWindowChangedMessage(object recipient, ThumbnailWindowChangedMessage message)
+        {
+            ThumbnailWindowChangedMessageParams thumbnailWindowChangedMessageParams = message.Value;
+            var handleSource = thumbnailWindowChangedMessageParams.HandleSource;
+
+            SelectedFavoriteProcessEntryViewModel = FavoriteProcessEntries.FirstOrDefault(f => f.Handle.Equals(handleSource));
+        }
+
+        private void HandleThumbnailWindowEditModeChangedMessage(object recipient, ThumbnailWindowEditModeChangedMessage message)
+        {
+            ThumbnailWindowEditModeChangedMessageParams thumbnailWindowEditModeChangedMessageParams = message.Value;
+            var handleSource = thumbnailWindowEditModeChangedMessageParams.HandleSource;
+            var thumbnailConfigViewModel = thumbnailWindowEditModeChangedMessageParams.ThumbnailConfigViewModel as ThumbnailConfigViewModel;
+            if (thumbnailConfigViewModel == null) return;
+
+            thumbnailConfigViewModel.IsActive = false;
+            thumbnailConfigViewModel.IsActive = true;
+            if (thumbnailConfigViewModel.IsActive)
+            {
+                if (thumbnailConfigViewModel.IsEditModeEnabled)
+                {
+                    ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)handleSource, thumbnailConfigViewModel);
+                    thumbnailWindow.Show();
+                }
+                else
+                {
+                    ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)handleSource, thumbnailConfigViewModel);
+                    thumbnailWindow.Show();
+                }
+            }
+        }
+
         private void HandleThumbnailWindowOpenConfigMessage(object recipient, ThumbnailWindowOpenConfigMessage message)
         {
             ThumbnailWindowOpenConfigMessageParams thumbnailConfigModifiedMessageParams = message.Value;
@@ -182,6 +216,10 @@ namespace LiveAppsOverlay.ViewModels
 
         private void HandleToggleEditModeKeyBindingMessage(object recipient, ToggleEditModeKeyBindingMessage message)
         {
+            if (SelectedFavoriteProcessEntryViewModel == null)
+            {
+                SelectedFavoriteProcessEntryViewModel = FavoriteProcessEntries.FirstOrDefault();
+            }
             if (SelectedFavoriteProcessEntryViewModel == null) return;
             if (!SelectedFavoriteProcessEntryViewModel.IsAnyThumbnailActive) return;
 
@@ -448,6 +486,10 @@ namespace LiveAppsOverlay.ViewModels
             _thumbnailManager.SaveFavorites();
         }
 
+        /// <summary>
+        /// Open / closes thumbnail window, clicked from the current shown favorite app overview.
+        /// </summary>
+        /// <param name="thumbnailConfigViewModel"></param>
         private void ThumbnailConfigToggleExecute(ThumbnailConfigViewModel? thumbnailConfigViewModel)
         {
             if (thumbnailConfigViewModel == null) return;

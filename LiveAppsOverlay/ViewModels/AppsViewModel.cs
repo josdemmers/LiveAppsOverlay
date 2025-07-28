@@ -449,6 +449,9 @@ namespace LiveAppsOverlay.ViewModels
                 thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
                 ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
                 thumbnailWindow.Show();
+
+                // Show config window for newly created thumbnail window.
+                WeakReferenceMessenger.Default.Send(new ThumbnailWindowOpenConfigMessage(new ThumbnailWindowOpenConfigMessageParams { ThumbnailConfigViewModel = thumbnailConfigViewModel }));
             }
         }
 

@@ -21,6 +21,7 @@ namespace LiveAppsOverlay.ViewModels.Entities
         private FavoriteProcessEntry _favoriteProcessEntry = new FavoriteProcessEntry();
 
         private nint _handle = 0;
+        private bool _isSelected = false;
 
         #region Constructors
 
@@ -75,6 +76,15 @@ namespace LiveAppsOverlay.ViewModels.Entities
         public bool IsAnyThumbnailActive
         {
             get => _thumbnailConfigs.OfType<ThumbnailConfigViewModel>().Any(t => t.IsActive);
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                SetProperty(ref _isSelected, value);
+            }
         }
 
         public FavoriteProcessEntry Model

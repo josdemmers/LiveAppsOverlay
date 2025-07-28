@@ -131,6 +131,15 @@ namespace LiveAppsOverlay.ViewModels
                 ((RelayCommand)NextSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)RefreshSelectedFavoriteProcessEntryHandleCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)ThumbnailConfigsToggleAllCommand).NotifyCanExecuteChanged();
+
+                foreach (var favoriteProcessEntry in FavoriteProcessEntries)
+                {
+                    favoriteProcessEntry.IsSelected = false;
+                }
+                if (SelectedFavoriteProcessEntryViewModel != null)
+                {
+                    SelectedFavoriteProcessEntryViewModel.IsSelected = true;
+                }
             }
         }
 

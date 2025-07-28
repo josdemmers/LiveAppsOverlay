@@ -93,9 +93,12 @@
 
                                             <TextBlock Grid.Column="0" Margin="2 2 2 2" TextTrimming="CharacterEllipsis" FontSize="15"
                                                        Text="{Binding DisplayName}"
-                                                       ToolTip="{Binding DisplayName}">
+                                                       ToolTip="{Binding DisplayName}"
+                                                       Foreground="{Binding Path=IsSelected, Converter={x:Static converters:SelectedProcessToBrushConverter.Instance}}">
                                                 <TextBlock.InputBindings>
-                                                    <MouseBinding Command="{Binding Path=DataContext.SelectFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}" MouseAction="LeftClick" />
+                                                    <MouseBinding Command="{Binding Path=DataContext.SelectFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" 
+                                                                  CommandParameter="{Binding}" 
+                                                                  MouseAction="LeftClick" />
                                                 </TextBlock.InputBindings>
                                             </TextBlock>
 
@@ -103,7 +106,8 @@
                                                     HorizontalAlignment="Right" VerticalAlignment="Center"
                                                     Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                                                     Foreground="{Binding Path=IsAnyThumbnailActive, Converter={x:Static converters:BooleanToRedGreenBrushConverter.Instance}}"
-                                                    Command="{Binding Path=DataContext.ToggleFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" CommandParameter="{Binding}">
+                                                    Command="{Binding Path=DataContext.ToggleFavoriteProcessEntryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AppsView}}}" 
+                                                    CommandParameter="{Binding}">
                                                 <iconPacks:PackIconMaterial Width="10" Height="10" Kind="Power" />
                                             </Button>
 

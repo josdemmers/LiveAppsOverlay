@@ -23,6 +23,7 @@ namespace LiveAppsOverlay.ViewModels.Entities
     public class ThumbnailConfigViewModel : ThumbnailConfigBaseViewModel
     {
         private string _appName = string.Empty;
+        private string _appNameDisplay = string.Empty;
         private bool _isDragModeEnabled = true;
         private bool _isRegionModeEnabled = false;
         private ThumbnailConfig _thumbnailConfig = new ThumbnailConfig();
@@ -50,6 +51,16 @@ namespace LiveAppsOverlay.ViewModels.Entities
             {
                 _appName = value;
                 SetProperty(ref _appName, value);
+            }
+        }
+
+        public string AppNameDisplay
+        {
+            get => _appNameDisplay;
+            set
+            {
+                _appNameDisplay = value;
+                SetProperty(ref _appNameDisplay, value);
             }
         }
 

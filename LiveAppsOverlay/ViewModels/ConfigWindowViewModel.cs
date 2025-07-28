@@ -115,7 +115,7 @@ namespace LiveAppsOverlay.ViewModels
             get
             {
                 string title = "Config";
-                title = string.IsNullOrWhiteSpace(ThumbnailConfigViewModel.AppName) ? title : ThumbnailConfigViewModel.AppName;
+                title = string.IsNullOrWhiteSpace(ThumbnailConfigViewModel.AppNameDisplay) ? title : ThumbnailConfigViewModel.AppNameDisplay;
                 title = string.IsNullOrWhiteSpace(ThumbnailConfigViewModel.Name) ? title : $"{title} - {ThumbnailConfigViewModel.Name}";
                 return title;
             }

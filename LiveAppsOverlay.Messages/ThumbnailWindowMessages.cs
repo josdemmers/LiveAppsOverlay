@@ -13,6 +13,7 @@ namespace LiveAppsOverlay.Messages
 
     public class ThumbnailWindowChangedMessageParams
     {
+        public string DisplayName { get; set; } = string.Empty;
         public nint HandleSource { get; set; }
     }
 

@@ -169,9 +169,10 @@ namespace LiveAppsOverlay.ViewModels
         private void HandleThumbnailWindowChangedMessage(object recipient, ThumbnailWindowChangedMessage message)
         {
             ThumbnailWindowChangedMessageParams thumbnailWindowChangedMessageParams = message.Value;
+            string displayName = thumbnailWindowChangedMessageParams.DisplayName;
             var handleSource = thumbnailWindowChangedMessageParams.HandleSource;
 
-            SelectedFavoriteProcessEntryViewModel = FavoriteProcessEntries.FirstOrDefault(f => f.Handle.Equals(handleSource));
+            SelectedFavoriteProcessEntryViewModel = FavoriteProcessEntries.FirstOrDefault(f => f.Handle.Equals(handleSource) && f.DisplayName.Equals(displayName));
         }
 
         private void HandleThumbnailWindowEditModeChangedMessage(object recipient, ThumbnailWindowEditModeChangedMessage message)
@@ -235,6 +236,7 @@ namespace LiveAppsOverlay.ViewModels
                 thumbnailConfigViewModel.IsActive = thumbnailConfigViewModel.IsEnabled;
                 thumbnailConfigViewModel.IsEditModeEnabled = !thumbnailConfigViewModel.IsEditModeEnabled;
                 thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+                thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
                 if (thumbnailConfigViewModel.IsActive)
                 {
                     if (thumbnailConfigViewModel.IsEditModeEnabled)
@@ -343,6 +345,7 @@ namespace LiveAppsOverlay.ViewModels
             {
                 thumbnailConfigViewModel.IsActive = thumbnailConfigViewModel.IsEnabled;
                 thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+                thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
                 if (thumbnailConfigViewModel.IsActive)
                 {
                     if (thumbnailConfigViewModel.IsEditModeEnabled)
@@ -447,6 +450,7 @@ namespace LiveAppsOverlay.ViewModels
                 // Create new thumbnail window
                 thumbnailConfigViewModel.IsActive = true;
                 thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+                thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
                 ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
                 thumbnailWindow.Show();
 
@@ -499,6 +503,7 @@ namespace LiveAppsOverlay.ViewModels
 
             thumbnailConfigViewModel.IsActive = !thumbnailConfigViewModel.IsActive;
             thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+            thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
 
             if (thumbnailConfigViewModel.IsActive)
             {
@@ -537,6 +542,7 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     thumbnailConfigViewModel.IsActive = thumbnailConfigViewModel.IsEnabled;
                     thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
+                    thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
                     if (thumbnailConfigViewModel.IsActive)
                     {
                         if (thumbnailConfigViewModel.IsEditModeEnabled)
@@ -581,6 +587,7 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     thumbnailConfigViewModel.IsActive = thumbnailConfigViewModel.IsEnabled;
                     thumbnailConfigViewModel.AppName = favoriteProcessEntryViewModel.Name;
+                    thumbnailConfigViewModel.AppNameDisplay = favoriteProcessEntryViewModel.DisplayName;
                     if (thumbnailConfigViewModel.IsActive)
                     {
                         if (thumbnailConfigViewModel.IsEditModeEnabled)

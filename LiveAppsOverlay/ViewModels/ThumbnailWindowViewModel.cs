@@ -262,6 +262,7 @@ namespace LiveAppsOverlay.ViewModels
                 // All properties
                 WeakReferenceMessenger.Default.Send(new ThumbnailWindowChangedMessage(new ThumbnailWindowChangedMessageParams
                 {
+                    DisplayName = ThumbnailConfigViewModel.AppNameDisplay,
                     HandleSource = HandleSource
                 }));
             }

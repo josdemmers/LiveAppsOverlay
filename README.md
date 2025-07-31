@@ -2,7 +2,7 @@
 
 [![GitHub stable release version](https://img.shields.io/github/v/release/josdemmers/LiveAppsOverlay?filter=v1*&logo=github&label=Stable)](https://github.com/josdemmers/LiveAppsOverlay/releases)
 [![GitHub stable release data](https://img.shields.io/github/release-date/josdemmers/LiveAppsOverlay?logo=github&label=Released)](https://github.com/josdemmers/LiveAppsOverlay/releases)
-[![GitHub stable release downloads (total)](https://img.shields.io/github/downloads/josdemmers/LiveAppsOverlay/total?logo=github&label=Downloads%20(Total))](https://github.com/josdemmers/LiveAppsOverlay/releases)
+[![GitHub stable release downloads (recent)](https://img.shields.io/github/downloads/josdemmers/LiveAppsOverlay/total?logo=github&label=Downloads%20(Recent))](https://github.com/josdemmers/LiveAppsOverlay/releases)
 [![GitHub License](https://img.shields.io/github/license/josdemmers/LiveAppsOverlay?logo=github)](https://github.com/josdemmers/LiveAppsOverlay/blob/master/LICENSE)
 
 [![Discord](https://img.shields.io/discord/320539672663031818?logo=discord&logoColor=white&label=Discord)](https://th.gl/discord)

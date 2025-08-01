@@ -27,6 +27,10 @@ With Live Apps Overlay you can select any app window or part of it and copy it o
 - Download the latest version from [Releases](https://github.com/josdemmers/LiveAppsOverlay/releases)
 - Extract files and run LiveAppsOverlay.exe
 
+## Usage
+
+- See [wiki](https://github.com/josdemmers/LiveAppsOverlay/wiki/Getting-started).
+
 ## Licensing
 
 MIT

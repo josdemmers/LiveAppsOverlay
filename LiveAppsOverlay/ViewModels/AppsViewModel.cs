@@ -250,12 +250,12 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     if (thumbnailConfigViewModel.IsEditModeEnabled)
                     {
-                        ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                         thumbnailWindow.Show();
                     }
                     else
                     {
-                        ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                         thumbnailWindow.Show();
                     }
                 }
@@ -317,8 +317,10 @@ namespace LiveAppsOverlay.ViewModels
 
         private void NextSelectedFavoriteProcessEntryHandleExecute()
         {
+            if (SelectedFavoriteProcessEntryViewModel == null) return;
+
             // First disable all active thumbnails before changing the process handle.
-            if (SelectedFavoriteProcessEntryViewModel?.IsAnyThumbnailActive ?? false)
+            if (SelectedFavoriteProcessEntryViewModel.IsAnyThumbnailActive)
             {
                 foreach (var thumbnailConfigViewModel in SelectedFavoriteProcessEntryViewModel.ThumbnailConfigs.OfType<ThumbnailConfigViewModel>())
                 {
@@ -327,7 +329,7 @@ namespace LiveAppsOverlay.ViewModels
             }
 
             // Select the next available process handle.
-            var processes = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel?.Name).Where(p => p.MainWindowHandle != 0).ToList();
+            var processes = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel.Name).Where(p => p.MainWindowHandle != 0).ToList();
 
             if (processes.Count == 0)
             {
@@ -359,12 +361,12 @@ namespace LiveAppsOverlay.ViewModels
                 {
                     if (thumbnailConfigViewModel.IsEditModeEnabled)
                     {
-                        ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                         thumbnailWindow.Show();
                     }
                     else
                     {
-                        ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                        ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                         thumbnailWindow.Show();
                     }
                 }
@@ -385,7 +387,9 @@ namespace LiveAppsOverlay.ViewModels
 
         private void RefreshSelectedFavoriteProcessEntryHandleExecute()
         {
-            var process = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel?.Name).Where(p => p.MainWindowHandle != 0).FirstOrDefault();
+            if (SelectedFavoriteProcessEntryViewModel == null) return;
+
+            var process = Process.GetProcessesByName(SelectedFavoriteProcessEntryViewModel.Name).Where(p => p.MainWindowHandle != 0).FirstOrDefault();
             if(process != null)
             {
                 SelectedFavoriteProcessEntryViewModel.Handle = process.MainWindowHandle;
@@ -439,6 +443,8 @@ namespace LiveAppsOverlay.ViewModels
 
         private async void ThumbnailConfigAddExecute()
         {
+            if (SelectedFavoriteProcessEntryViewModel == null) return;
+
             ThumbnailConfigViewModel thumbnailConfigViewModel = new ThumbnailConfigViewModel(new ThumbnailConfig());
 
             var addThumbnailConfigDialog = new CustomDialog() { Title = "Add" };
@@ -453,14 +459,14 @@ namespace LiveAppsOverlay.ViewModels
             // Add confirmed ThumbnailConfig.
             if (!dataContext.IsCanceled)
             {
-                SelectedFavoriteProcessEntryViewModel?.AddThumbnailConfig(thumbnailConfigViewModel);
+                SelectedFavoriteProcessEntryViewModel.AddThumbnailConfig(thumbnailConfigViewModel);
                 _thumbnailManager.SaveFavorites();
 
                 // Create new thumbnail window
                 thumbnailConfigViewModel.IsActive = true;
                 thumbnailConfigViewModel.AppName = SelectedFavoriteProcessEntryViewModel.Name;
                 thumbnailConfigViewModel.AppNameDisplay = SelectedFavoriteProcessEntryViewModel.DisplayName;
-                ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                 thumbnailWindow.Show();
 
                 // Show config window for newly created thumbnail window.
@@ -470,14 +476,17 @@ namespace LiveAppsOverlay.ViewModels
 
         private void ThumbnailConfigRemoveExecute(ThumbnailConfigViewModel? thumbnailConfigViewModel)
         {
-            _dialogCoordinator.ShowMessageAsync(this, $"Remove", $"Are you sure you want to remove \"{thumbnailConfigViewModel?.Name}\"", MessageDialogStyle.AffirmativeAndNegative).ContinueWith(t =>
+            if (thumbnailConfigViewModel == null) return;
+
+            _dialogCoordinator.ShowMessageAsync(this, $"Remove", $"Are you sure you want to remove \"{thumbnailConfigViewModel.Name}\"", MessageDialogStyle.AffirmativeAndNegative).ContinueWith(t =>
             {
                 if (t.Result == MessageDialogResult.Affirmative)
                 {
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        _logger.LogInformation($"Removed \"{thumbnailConfigViewModel?.Name}\"");
+                        _logger.LogInformation($"Removed \"{thumbnailConfigViewModel.Name}\"");
 
+                        thumbnailConfigViewModel.IsActive = false;
                         SelectedFavoriteProcessEntryViewModel?.RemoveTumbnailConfig(thumbnailConfigViewModel);
                         _thumbnailManager.SaveFavorites();
                     });
@@ -508,6 +517,7 @@ namespace LiveAppsOverlay.ViewModels
         /// <param name="thumbnailConfigViewModel"></param>
         private void ThumbnailConfigToggleExecute(ThumbnailConfigViewModel? thumbnailConfigViewModel)
         {
+            if (SelectedFavoriteProcessEntryViewModel == null) return;
             if (thumbnailConfigViewModel == null) return;
 
             thumbnailConfigViewModel.IsActive = !thumbnailConfigViewModel.IsActive;
@@ -518,12 +528,12 @@ namespace LiveAppsOverlay.ViewModels
             {
                 if (thumbnailConfigViewModel.IsEditModeEnabled)
                 {
-                    ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                    ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                     thumbnailWindow.Show();
                 }
                 else
                 {
-                    ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                    ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                     thumbnailWindow.Show();
                 }
             }
@@ -556,12 +566,12 @@ namespace LiveAppsOverlay.ViewModels
                     {
                         if (thumbnailConfigViewModel.IsEditModeEnabled)
                         {
-                            ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                            ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                             thumbnailWindow.Show();
                         }
                         else
                         {
-                            ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                            ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)SelectedFavoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                             thumbnailWindow.Show();
                         }
                     }
@@ -579,7 +589,7 @@ namespace LiveAppsOverlay.ViewModels
             if (favoriteProcessEntryViewModel == null) return;
 
             // Get handle if not set
-            var process = Process.GetProcessesByName(favoriteProcessEntryViewModel?.Name).Where(p => p.MainWindowHandle != 0).FirstOrDefault();
+            var process = Process.GetProcessesByName(favoriteProcessEntryViewModel.Name).Where(p => p.MainWindowHandle != 0).FirstOrDefault();
             if (process == null) return;
 
             favoriteProcessEntryViewModel.Handle = process.MainWindowHandle;
@@ -601,12 +611,12 @@ namespace LiveAppsOverlay.ViewModels
                     {
                         if (thumbnailConfigViewModel.IsEditModeEnabled)
                         {
-                            ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)favoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                            ThumbnailWindowEdit thumbnailWindow = new ThumbnailWindowEdit((HWND)favoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                             thumbnailWindow.Show();
                         }
                         else
                         {
-                            ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)favoriteProcessEntryViewModel?.Handle, thumbnailConfigViewModel);
+                            ThumbnailWindow thumbnailWindow = new ThumbnailWindow((HWND)favoriteProcessEntryViewModel.Handle, thumbnailConfigViewModel);
                             thumbnailWindow.Show();
                         }
                     }
@@ -629,7 +639,7 @@ namespace LiveAppsOverlay.ViewModels
 
         private void UpdateProcessEntries()
         {
-            ImageSource ConvertIcon(System.Drawing.Icon icon)
+            ImageSource? ConvertIcon(System.Drawing.Icon? icon)
             {
                 if (icon == null) return null;
 

@@ -232,6 +232,8 @@ namespace LiveAppsOverlay.ViewModels.Entities
     {
         public int Compare(object? x, object? y)
         {
+            if (x == null || y == null) return 0;
+
             int result = -1;
 
             if ((x.GetType() == typeof(ThumbnailConfigAddViewModel)) && !(y.GetType() == typeof(ThumbnailConfigAddViewModel))) return -1;

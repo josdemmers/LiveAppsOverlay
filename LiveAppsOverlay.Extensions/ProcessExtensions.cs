@@ -14,7 +14,7 @@ namespace LiveAppsOverlay.Extensions
         [DllImport("Kernel32.dll")]
         private static extern uint QueryFullProcessImageName([In] IntPtr hProcess, [In] uint dwFlags, [Out] StringBuilder lpExeName, [In, Out] ref uint lpdwSize);
 
-        public static string GetMainModuleFileName(this Process process, int buffer = 1024)
+        public static string? GetMainModuleFileName(this Process process, int buffer = 1024)
         {
             var fileNameBuilder = new StringBuilder(buffer);
             uint bufferLength = (uint)fileNameBuilder.Capacity + 1;
@@ -22,12 +22,12 @@ namespace LiveAppsOverlay.Extensions
                 fileNameBuilder.ToString() : null;
         }
 
-        public static Icon GetIcon(this Process process)
+        public static Icon? GetIcon(this Process process)
         {
             try
             {
-                string mainModuleFileName = process.GetMainModuleFileName();
-                return Icon.ExtractAssociatedIcon(mainModuleFileName);
+                string? mainModuleFileName = process.GetMainModuleFileName();
+                return Icon.ExtractAssociatedIcon(mainModuleFileName ?? string.Empty);
             }
             catch
             {

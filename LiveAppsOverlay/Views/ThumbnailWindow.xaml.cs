@@ -74,9 +74,12 @@ namespace LiveAppsOverlay.Views
             {
                 if (child is DependencyObject)
                 {
-                    DependencyObject depChild = child as DependencyObject;
-                    height = ((FrameworkElement)depChild).ActualHeight;
-                    width = ((FrameworkElement)depChild).ActualWidth;
+                    DependencyObject? depChild = child as DependencyObject;
+                    if (depChild != null)
+                    {
+                        height = ((FrameworkElement)depChild).ActualHeight;
+                        width = ((FrameworkElement)depChild).ActualWidth;
+                    }
                 }
             }
 
